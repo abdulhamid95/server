@@ -9,6 +9,14 @@ const userValidationRules = () => {
     ]
 }
 
+const updateUserValidationRules = () => {
+    return [
+        body('name').notEmpty().withMessage('اسم المستخدم مطلوب'),
+        body('password').notEmpty().withMessage('كلمة المرور مطلوبة'),
+        body('password').isLength({ min: 5 }).withMessage('كلمة المرور يجب أن تكون أكثر من خمسة محارف'),
+    ]
+}
+
 
 const validate = (req, res, next) => {
     const errors = validationResult(req)
@@ -22,5 +30,6 @@ const validate = (req, res, next) => {
 
 module.exports = {
     userValidationRules,
+    updateUserValidationRules,
     validate
 }

@@ -72,3 +72,20 @@ exports.uploadUserPhoto = async (req, res) => {
         res.status(500).json(e)
     }
 }
+
+exports.updateProfile = async (req, res) => {
+    const {name, password} = req.body
+    try {
+        const hashPassowrd = await bcrypt.hash(password, 10);
+        const update = await models.User.update(
+            {
+                name,
+                password: hashPassowrd
+            },
+            {where: {id: req.currentUser.id}}
+        );
+        res.status(200).json({message: "تم تعديل البيانات الشخصية"})
+    } catch(e) {
+        res.status(500).json(e)
+    }
+}
