@@ -136,7 +136,7 @@ exports.deleteMyPost = async (req, res) => {
             where: {PostId: postId}
         });
         await models.Post.destroy({
-            where: {id: postId, UserId: req.currentUser.id}
+            where: {id: postId}
         })
         res.status(200).json({message: "تم حذف منشورك"})
     } catch(e) {
