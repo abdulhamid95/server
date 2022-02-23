@@ -4,7 +4,6 @@ const fs = require('fs/promises');
 
 exports.newPost = async (req, res) => {
     const {title, contents, steps, country, region} = req.body;
-    const url = req.protocol + '://' + req.get('host');
     try {
         const post = await models.Post.create({
             title,
@@ -16,7 +15,7 @@ exports.newPost = async (req, res) => {
         });
         req.files.map(async function(file) {
             const post_img = await models.Post_Image.create({
-                img_uri: url + '/public/images/' + file.filename,
+                img_uri: '/public/images/' + file.filename,
                 PostId: post.id
             })
         })
@@ -127,7 +126,7 @@ exports.deleteMyPost = async (req, res) => {
             where: {PostId: postId}
         }).then(res => {
             res.map((img) => {
-                fs.unlink('./public/images/' + img.img_uri.split("/")[5], function(err) {
+                fs.unlink('./public/images/' + img.img_uri.split("/")[3], function(err) {
                     if (err) throw err
                 })
             })

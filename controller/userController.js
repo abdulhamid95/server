@@ -59,11 +59,10 @@ exports.getProfile = async (req, res) => {
 }
 
 exports.uploadUserPhoto = async (req, res) => {
-    const url = req.protocol + '://' + req.get('host');
     try {
         const uploadPhoto = await models.User.update(
             {
-                img_uri: url + '/public/images/' + req.file.filename
+                img_uri: '/public/images/' + req.file.filename
             },
             { where: {id: req.currentUser.id} }
         );
